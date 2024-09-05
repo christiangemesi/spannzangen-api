@@ -46,5 +46,14 @@ public class Collet {
         this.articleNumber = articleNumber;
     }
 
+    @Override
+    public String toString() {
+        return "Collet{" +
+                "id=" + id +
+                ", size=" + size +
+                ", type='" + type + '\'' +
+                ", articleNumber='" + articleNumber + '\'' +
+                '}';
+    }
 
 }
