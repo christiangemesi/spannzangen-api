@@ -43,7 +43,7 @@ public class ColletController {
 
     @DELETE
     @Path("/spannzange/{id}")
-    public Response deleteCollet(@PathParam("id") int id) {
+    public Response deleteColletById(@PathParam("id") int id) {
         boolean isDeleted = colletService.deleteCollet(id);
         if (isDeleted) {
             return Response.ok().entity("Collet with ID " + id + " deleted successfully").build();
