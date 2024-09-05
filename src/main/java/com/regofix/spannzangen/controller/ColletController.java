@@ -1,32 +1,43 @@
 package com.regofix.spannzangen.controller;
 
-
-import com.regofix.spannzangen.StartupBean;
 import com.regofix.spannzangen.model.Collet;
-import com.regofix.spannzangen.repository.ColletRepository;
-import jakarta.inject.Inject;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import com.regofix.spannzangen.service.ColletService;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-
+import jakarta.ws.rs.core.Response;
 
 import java.util.List;
+import java.util.Optional;
 
-@Path("/spannzangen")
+@Path("/")
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class ColletController {
 
-    @Inject
-    private StartupBean startupBean;
-
-    private final ColletRepository colletRepository = new ColletRepository();
-
+    private final ColletService colletService = new ColletService();
 
     @GET
+    @Path("/spannzangen")
     public List<Collet> getAllCollets() {
-        // Use the repository from the startup bean to return all collets
-        return startupBean.getColletRepository().getAllCollets();
+        return colletService.getAllCollets();
     }
 
+    @GET
+    @Path("spannzange/{id}")
+    public Response getColletById(@PathParam("id") int id) {
+        Optional<Collet> collet = colletService.getColletById(id);
+        if (collet.isPresent()) {
+            return Response.ok(collet.get()).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).entity("Collet with ID " + id + " not found").build();
+        }
+    }
+
+    @POST
+    @Path("/spannzange")
+    public Response addCollet(Collet collet) {
+        System.out.println("Received Collet: " + collet);  // Add this for debugging
+        Collet addedCollet = colletService.addCollet(collet);
+        return Response.status(Response.Status.CREATED).entity(addedCollet).build();
+    }
 }
