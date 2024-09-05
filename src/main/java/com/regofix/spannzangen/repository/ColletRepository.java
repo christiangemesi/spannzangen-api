@@ -18,10 +18,12 @@ public class ColletRepository {
     }
 
     public Collet getColletById(int id) {
-        return collets.stream()
-                .filter(collet -> collet.getId() == id)
-                .findFirst()
-                .orElse(null);
+        for (Collet collet : collets) {
+            if (collet.getId() == id) {
+                return collet;
+            }
+        }
+        return null;
     }
 
     public Collet addCollet(Collet collet) {
@@ -31,6 +33,12 @@ public class ColletRepository {
     }
 
     public boolean deleteCollet(int id) {
-        return collets.removeIf(collet -> collet.getId() == id);
+        for (Collet collet : collets) {
+            if (collet.getId() == id) {
+                collets.remove(collet);
+                return true;
+            }
+        }
+        return false;
     }
 }
