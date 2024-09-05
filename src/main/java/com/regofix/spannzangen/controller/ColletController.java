@@ -7,7 +7,6 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.util.List;
-import java.util.Optional;
 
 @Path("/")
 @Produces(MediaType.APPLICATION_JSON)
@@ -25,13 +24,11 @@ public class ColletController {
     @GET
     @Path("/spannzange/{id}")
     public Response getColletById(@PathParam("id") int id) {
-        Optional<Collet> collet = colletService.getColletById(id);
-        if (collet.isPresent()) {
-            return Response.ok(collet.get()).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND)
-                    .entity("Collet with ID " + id + " not found")
-                    .build();
+        try {
+            Collet collet = colletService.getColletById(id);
+            return Response.ok(collet).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 
@@ -49,11 +46,11 @@ public class ColletController {
     @DELETE
     @Path("/spannzange/{id}")
     public Response deleteCollet(@PathParam("id") int id) {
-        Optional<String> errorMessage = colletService.deleteCollet(id);
-        if (errorMessage.isPresent()) {
-            return Response.status(Response.Status.NOT_FOUND).entity(errorMessage.get()).build();
-        } else {
-            return Response.status(Response.Status.NO_CONTENT).build();
+        try {
+            colletService.deleteCollet(id);
+            return Response.ok().build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 }

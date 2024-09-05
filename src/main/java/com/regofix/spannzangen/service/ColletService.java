@@ -4,7 +4,6 @@ import com.regofix.spannzangen.model.Collet;
 import com.regofix.spannzangen.repository.ColletRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 public class ColletService {
 
@@ -17,8 +16,12 @@ public class ColletService {
         return colletRepository.getAllCollets();
     }
 
-    public Optional<Collet> getColletById(int id) {
-        return colletRepository.getColletById(id);
+    public Collet getColletById(int id) {
+        Collet collet = colletRepository.getColletById(id);
+        if (collet == null) {
+            throw new IllegalArgumentException("Collet with ID " + id + " not found");
+        }
+        return collet;
     }
 
     public Collet addCollet(Collet collet) {
@@ -37,11 +40,11 @@ public class ColletService {
         return colletRepository.addCollet(collet);
     }
 
-    public Optional<String> deleteCollet(int id) {
+    public void deleteCollet(int id) {
         boolean deleted = colletRepository.deleteCollet(id);
         if (!deleted) {
-            return Optional.of("Collet with ID " + id + " not found");
+            throw new IllegalArgumentException("Collet with ID " + id + " not found");
         }
-        return Optional.empty();
+
     }
 }
