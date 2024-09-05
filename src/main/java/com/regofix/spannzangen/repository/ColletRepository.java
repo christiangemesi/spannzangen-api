@@ -4,6 +4,7 @@ import com.regofix.spannzangen.model.Collet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ColletRepository {
@@ -17,13 +18,13 @@ public class ColletRepository {
         return collets;
     }
 
-    public Collet getColletById(int id) {
+    public Optional getColletById(int id) {
         for (Collet collet : collets) {
             if (collet.getId() == id) {
-                return collet;
+                return Optional.of(collet);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     public Collet addCollet(Collet collet) {
