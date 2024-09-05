@@ -36,8 +36,19 @@ public class ColletController {
     @POST
     @Path("/spannzange")
     public Response addCollet(Collet collet) {
-        System.out.println("Received Collet: " + collet);  // Add this for debugging
+        System.out.println("Received Collet: " + collet);
         Collet addedCollet = colletService.addCollet(collet);
         return Response.status(Response.Status.CREATED).entity(addedCollet).build();
+    }
+
+    @DELETE
+    @Path("/spannzange/{id}")
+    public Response deleteCollet(@PathParam("id") int id) {
+        boolean isDeleted = colletService.deleteCollet(id);
+        if (isDeleted) {
+            return Response.ok().entity("Collet with ID " + id + " deleted successfully").build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).entity("Collet with ID " + id + " not found").build();
+        }
     }
 }
