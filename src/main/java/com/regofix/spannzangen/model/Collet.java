@@ -1,6 +1,6 @@
 package com.regofix.spannzangen.model;
 
-public class Spannzange {
+public class Collet {
 
     private int id;
     private int size;
@@ -8,9 +8,9 @@ public class Spannzange {
     private String articleNumber;
 
     // Empty constructor for Flexibility to create an object
-    public Spannzange() {}
+    public Collet() {}
 
-    public Spannzange(int id, int size, String type, String articleNumber) {
+    public Collet(int id, int size, String type, String articleNumber) {
         this.id = id;
         this.size = size;
         this.type = type;
