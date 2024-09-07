@@ -34,7 +34,7 @@ public class ColletService {
         }
 
         if (!collet.getArticleNumber().matches("\\d{4}\\.\\d{5}")) {
-            throw new IllegalArgumentException("Invalid article number: " + collet.getArticleNumber() + ". It should follow the format xxxx.xxxxx");
+            throw new IllegalArgumentException("Invalid article number: " + collet.getArticleNumber() + ". It should follow the format xxxx.xxxxx containing only Numbers");
         }
 
         return colletRepository.addCollet(collet);
