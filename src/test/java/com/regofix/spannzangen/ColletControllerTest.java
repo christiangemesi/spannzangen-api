@@ -96,10 +96,8 @@ public class ColletControllerTest {
      */
     @Test
     public void testDeleteColletByValidId() {
-        // Add a collet with valid data first
         String colletJson = "{\"size\": 10, \"type\": \"MB\", \"articleNumber\": \"1234.56789\"}";
 
-        // Add the collet
         given()
                 .contentType("application/json")
                 .body(colletJson)
@@ -107,7 +105,6 @@ public class ColletControllerTest {
                 .then()
                 .statusCode(201);
 
-        // Now delete the collet with ID 1
         given()
                 .when().delete("/spannzange/1")
                 .then()
